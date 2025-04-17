@@ -1,11 +1,56 @@
-# Prerequisites
-*.d
+# ESP-IDF
+build/
+sdkconfig
+sdkconfig.old
 
-# Compiled Object files
-*.slo
-*.lo
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Compiled files
 *.o
 *.obj
+*.elf
+*.bin
+*.hex
+*.map
+*.dis
+*.exe
+*.out
+*.app
+
+# Debug files
+*.log
+*.log.*
+*.log.gz
+
+# Dependencies
+dependencies/
+managed_components/
+
+# Partition table
+partition_table/
+
+# Flash and memory files
+*.flash
+*.mem
+
+# Backup files
+*.bak
+*.backup
+*_backup
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Prerequisites
+*.d
 
 # Precompiled Headers
 *.gch
@@ -25,8 +70,3 @@
 *.la
 *.a
 *.lib
-
-# Executables
-*.exe
-*.out
-*.app
