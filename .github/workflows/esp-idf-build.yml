@@ -11,22 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        esp_idf_version: ['v4.4', 'v5.0', 'v5.1', 'v5.2', 'v5.3']
+        esp_idf_version: ['v5.0', 'v5.1', 'v5.2', 'v5.3']
+        target: ['esp32', 'esp32s3']
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
       
-      - name: Install ESP-IDF ${{ matrix.esp_idf_version }}
+      - name: Build root project on ESP-IDF ${{ matrix.esp_idf_version }} on ${{ matrix.target }} hardware
         uses: espressif/esp-idf-ci-action@v1
         with:
           esp_idf_version: ${{ matrix.esp_idf_version }}
-          
-      - name: Build project
-        run: |
-          . $IDF_PATH/export.sh
-          idf.py build
-          
+          target: ${{ matrix.target }}
+          path: '.'
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ matrix.esp_idf_version }}
+          name: build-${{ matrix.esp_idf_version }}-${{ matrix.target }}
           path: build/ 
