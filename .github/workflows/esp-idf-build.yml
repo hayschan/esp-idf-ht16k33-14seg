@@ -1,0 +1,31 @@
+name: ESP-IDF Build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        esp_idf_version: ['v4.4', 'v5.0', 'v5.1', 'v5.2', 'v5.3']
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install ESP-IDF ${{ matrix.esp_idf_version }}
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: ${{ matrix.esp_idf_version }}
+          
+      - name: Build project
+        run: |
+          idf.py build
+          
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.esp_idf_version }}
+          path: build/ 
